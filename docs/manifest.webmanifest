@@ -1,11 +1,10 @@
 {
-  "name": "LINCE — Finanças",
+  "name": "LINCE Financeiro",
   "short_name": "LINCE",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#090909",
-  "theme_color": "#090909",
-  "description": "Controle financeiro pessoal",
+  "background_color": "#090a0d",
+  "theme_color": "#090a0d",
   "icons": [
     {
       "src": "icons/icon-192.png",
