@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "LINCE",
+    "slug": "lince-financas",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "scheme": "lince",
+    "newArchEnabled": true,
+    "android": {"package": "com.lince.financas", "versionCode": 1},
+    "plugins": ["expo-router", "expo-sqlite", "expo-document-picker"]
+  }
+}
