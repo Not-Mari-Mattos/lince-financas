@@ -1,3 +1,11 @@
-LINCE — pacote integrado para GitHub Pages.
-Inclui dashboard, lançamentos, cartões, contas previstas/recorrentes, importação CSV/OFX/PDF digital/XLSX (PDF.js e SheetJS carregados sob demanda), backup JSON, PWA.
-Limitações: leitura PDF heurística e exige PDF com texto selecionável; não há OCR de PDF escaneado, Open Finance, sincronização, criptografia ou conciliação bancária automática. Dados locais no navegador. Fazer backup regularmente.
+LINCE — atualização de recorrências e cartões
+
+Novidades desta versão:
+- Receitas e despesas podem ser configuradas como recorrentes mensalmente no cadastro do lançamento.
+- O LINCE gera as próximas ocorrências mensais ao abrir o app, sem duplicar ocorrências já geradas.
+- A fatura BB/Ourocard identifica o cartão pelo nome e últimos quatro dígitos, cria o cartão automaticamente e vincula as compras importadas.
+- Quando disponíveis na fatura, limite, dia de fechamento e vencimento são preenchidos automaticamente.
+- Importação CSV trata valores negativos como créditos/entradas.
+- Cache do PWA atualizado para lince-full-v2; o app busca primeiro a versão publicada e usa cache como fallback offline.
+
+Importante: os dados existentes permanecem no armazenamento local do navegador. Faça um backup antes de atualizar, por segurança.
