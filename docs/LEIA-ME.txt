@@ -1,0 +1,12 @@
+LINCE — versão web instalável (PWA)
+
+COMO PUBLICAR:
+1. Extraia esta pasta.
+2. Publique o conteúdo em um serviço HTTPS estático (GitHub Pages, Netlify ou similar).
+3. Abra o endereço HTTPS no Chrome Android.
+4. Menu ⋮ > Instalar app ou Adicionar à tela inicial.
+
+Os dados ficam no armazenamento local do navegador. Exporte o backup em Dados regularmente.
+
+Esta versão inclui lançamentos manuais, dashboard, categorias, análise mensal e backup JSON.
+Ainda não inclui importação de faturas/PDF/CSV/OFX, OCR de contas, Open Finance, parcelas e conciliação automática. O tratamento do crédito é registrado como preferência do lançamento, mas a apuração por ciclo da fatura ainda será implementada.

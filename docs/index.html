@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090909">
+<meta name="description" content="LINCE — seu controle financeiro pessoal.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<title>LINCE — Finanças</title>
+<style>
+:root{color-scheme:dark;--bg:#090909;--panel:#141414;--panel2:#1b1b1b;--line:#292929;--muted:#929292;--text:#f4f4f4;--green:#8fc7a2;--red:#dc8585;--gold:#c7b58a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 Inter,system-ui,-apple-system,Segoe UI,sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+button,input,select{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;padding:18px 16px 90px}.top{display:flex;align-items:center;justify-content:space-between;margin:8px 0 24px}.brand{font-size:22px;font-weight:850;letter-spacing:5px}.sub{font-size:11px;color:var(--muted);letter-spacing:1.6px;margin-top:2px}.iconbtn{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:12px;padding:10px 13px}
+.eyebrow{font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}.balance{background:linear-gradient(145deg,#1a1a1a,#101010);border:1px solid #303030;border-radius:22px;padding:22px;margin-bottom:14px}.balanceNum{font-size:34px;font-weight:750;letter-spacing:-1px;margin:8px 0 18px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#111;border:1px solid var(--line);border-radius:15px;padding:14px}.stat strong{display:block;font-size:18px;margin-top:5px}.positive{color:var(--green)}.negative{color:var(--red)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0 25px}.action{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:14px;border-radius:14px;font-weight:650}.action.primary{background:#e8e8e8;color:#111;border-color:#e8e8e8}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:22px 0 12px}.sectionhead h2{font-size:16px;margin:0}.muted{color:var(--muted)}.list{display:grid;gap:9px}.item{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);padding:13px;border-radius:15px}.dot{width:38px;height:38px;border-radius:12px;background:#252525;display:grid;place-items:center;font-size:17px}.itemmain{flex:1;min-width:0}.itemmain b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.itemmain small{color:var(--muted)}.amount{font-weight:700;text-align:right;white-space:nowrap}.amount small{display:block;font-size:10px;color:var(--muted);font-weight:400}.empty{border:1px dashed #353535;border-radius:15px;padding:24px;text-align:center;color:var(--muted)}
+nav{position:fixed;bottom:0;left:0;right:0;background:#101010ed;backdrop-filter:blur(18px);border-top:1px solid var(--line);display:flex;justify-content:center;padding:10px 12px calc(10px + env(safe-area-inset-bottom));z-index:5}nav button{flex:1;max-width:180px;background:none;border:0;color:var(--muted);padding:7px;font-size:12px}nav button.active{color:var(--text)}
+.page{display:none}.page.active{display:block}
+form{display:grid;gap:12px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}.field input,.field select{width:100%;padding:13px;background:#101010;border:1px solid #333;border-radius:12px;color:var(--text);outline:none}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.submit{background:#eee;color:#111;border:0;border-radius:13px;padding:14px;font-weight:750;margin-top:6px}.secondary{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:11px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:16px;margin-bottom:12px}.filter{display:flex;gap:8px;overflow:auto;margin:12px 0}.filter button{white-space:nowrap;background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:99px;padding:8px 12px}.filter button.active{background:#eee;color:#111}
+.note{font-size:12px;color:var(--muted);line-height:1.5}.hidden{display:none!important}.toast{position:fixed;left:16px;right:16px;bottom:85px;background:#eee;color:#111;padding:12px 15px;border-radius:12px;text-align:center;z-index:10}
+@media(min-width:600px){.app{padding-top:28px}.balanceNum{font-size:42px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div><div class="brand">LINCE</div><div class="sub">CONTROLE FINANCEIRO PESSOAL</div></div><button class="iconbtn" id="installBtn" hidden>＋ Instalar</button></header>
+<main>
+<section class="page active" id="dashboard">
+<div class="balance"><div class="eyebrow">Saldo registrado</div><div class="balanceNum" id="balance">R$ 0,00</div><div class="stats"><div class="stat"><span class="eyebrow">Receitas do mês</span><strong class="positive" id="income">R$ 0,00</strong></div><div class="stat"><span class="eyebrow">Despesas do mês</span><strong class="negative" id="expense">R$ 0,00</strong></div></div></div>
+<div class="actions"><button class="action primary" onclick="openForm('expense')">＋ Nova despesa</button><button class="action" onclick="openForm('income')">＋ Nova receita</button></div>
+<div class="sectionhead"><h2>Movimentações recentes</h2><span class="muted" id="count">0 lançamentos</span></div><div class="list" id="recent"></div>
+</section>
+<section class="page" id="transactions">
+<div class="sectionhead"><h2>Lançamentos</h2><button class="secondary" onclick="openForm('expense')">＋ Adicionar</button></div>
+<div class="filter"><button class="active" data-filter="all">Todos</button><button data-filter="expense">Despesas</button><button data-filter="income">Receitas</button></div><div class="list" id="allList"></div>
+</section>
+<section class="page" id="new">
+<div class="sectionhead"><h2 id="formTitle">Novo lançamento</h2><span class="muted">LINCE</span></div>
+<div class="card"><form id="entryForm">
+<div class="field"><label>Descrição</label><input id="description" placeholder="Ex.: Mercado, salário..." required maxlength="70"></div>
+<div class="row"><div class="field"><label>Valor (R$)</label><input id="value" inputmode="decimal" placeholder="0,00" required></div><div class="field"><label>Data</label><input id="date" type="date" required></div></div>
+<div class="row"><div class="field"><label>Tipo</label><select id="type"><option value="expense">Despesa</option><option value="income">Receita</option></select></div><div class="field"><label>Categoria</label><select id="category"></select></div></div>
+<div class="field"><label>Forma de pagamento</label><select id="payment"><option>Pix</option><option>Débito</option><option>Crédito</option><option>Dinheiro</option><option>Transferência</option><option>Boleto</option><option>Outro</option></select></div>
+<div class="field hidden" id="creditField"><label>Como contabilizar esta compra no crédito?</label><select id="creditTreatment"><option value="consumption">No mês da compra (consumo)</option><option value="invoice">No mês de vencimento da fatura (compromisso)</option></select></div>
+<div class="field"><label>Observações (opcional)</label><input id="notes" placeholder="Detalhes adicionais"></div>
+<button class="submit" type="submit">Salvar lançamento</button></form></div>
+<p class="note">Os dados ficam salvos neste dispositivo. Exporte um backup regularmente para não perder seus registros.</p>
+</section>
+<section class="page" id="insights"><div class="sectionhead"><h2>Visão do mês</h2></div><div class="card"><div class="eyebrow">Resultado do mês</div><div class="balanceNum" id="result">R$ 0,00</div><div class="note">Soma das receitas menos despesas registradas no mês atual.</div></div><div class="card"><div class="sectionhead"><h2>Despesas por categoria</h2></div><div id="categories" class="list"></div></div></section>
+<section class="page" id="settings"><div class="sectionhead"><h2>Dados e preferências</h2></div><div class="card"><h3>Backup dos seus dados</h3><p class="note">Exporte um arquivo JSON para guardar seus lançamentos ou importar em outro dispositivo.</p><button class="action primary" style="width:100%" id="exportBtn">Exportar backup</button><div style="height:9px"></div><label class="action" style="display:block;text-align:center">Importar backup JSON<input id="importFile" type="file" accept="application/json,.json" hidden></label></div><div class="card"><h3>Privacidade</h3><p class="note">O LINCE salva os dados localmente neste navegador. Não há conta bancária conectada nem envio automático para servidor. Limpar os dados do navegador ou desinstalar pode apagar seus registros se não houver backup.</p></div><div class="card"><h3>Sobre o LINCE</h3><p class="note">Versão inicial 0.1 · Controle financeiro pessoal.</p></div></section>
+</main></div>
+<nav><button class="active" data-page="dashboard">⌂<br>Início</button><button data-page="transactions">☷<br>Lançamentos</button><button data-page="insights">◫<br>Análises</button><button data-page="settings">⚙<br>Dados</button></nav>
+<div id="toast" class="toast hidden"></div>
+<script>
+const $=id=>document.getElementById(id), money=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const cats={expense:['Alimentação','Moradia','Transporte','Saúde','Compras','Lazer','Assinaturas','Educação','Contas','Outros'],income:['Salário','Freelance','Investimentos','Reembolso','Outros']};
+let entries=JSON.parse(localStorage.getItem('lince_entries')||'[]'),filter='all',formType='expense';
+function save(){localStorage.setItem('lince_entries',JSON.stringify(entries));render()}
+function toast(s){$('toast').textContent=s;$('toast').classList.remove('hidden');setTimeout(()=>$('toast').classList.add('hidden'),2200)}
+function page(id){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===id))}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>page(b.dataset.page));
+function openForm(t){formType=t;$('type').value=t;$('formTitle').textContent=t==='income'?'Nova receita':'Nova despesa';fillCats();$('date').value=new Date().toISOString().slice(0,10);$('payment').value='Pix';$('creditField').classList.add('hidden');page('new')}
+function fillCats(){let t=$('type').value;$('category').innerHTML=cats[t].map(c=>`<option>${c}</option>`).join('')}
+$('type').onchange=fillCats;$('payment').onchange=()=> $('creditField').classList.toggle('hidden',$('payment').value!=='Crédito');
+$('entryForm').onsubmit=e=>{e.preventDefault();let v=Number($('value').value.replace(/\./g,'').replace(',','.'));if(!v||v<0){toast('Informe um valor válido');return}entries.unshift({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),description:$('description').value.trim(),value:v,date:$('date').value,type:$('type').value,category:$('category').value,payment:$('payment').value,creditTreatment:$('payment').value==='Crédito'?$('creditTreatment').value:null,notes:$('notes').value});save();e.target.reset();toast('Lançamento salvo');page('dashboard')};
+function itemHTML(x){return `<div class="item"><div class="dot">${x.type==='income'?'↗':'↘'}</div><div class="itemmain"><b>${esc(x.description)}</b><small>${esc(x.category)} · ${new Date(x.date+'T12:00:00').toLocaleDateString('pt-BR')} · ${esc(x.payment)}</small></div><div class="amount ${x.type==='income'?'positive':'negative'}">${x.type==='income'?'+':'−'} ${money(x.value)}<small>toque longo para excluir</small></div></div>`}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function bindDelete(root){root.querySelectorAll('.item').forEach((el,i)=>{let timer;el.addEventListener('touchstart',()=>timer=setTimeout(()=>{let list=root.id==='recent'?entries:entries.filter(x=>filter==='all'||x.type===filter);let x=list[i];if(x&&confirm('Excluir '+x.description+'?')){entries=entries.filter(y=>y.id!==x.id);save()}},650));['touchend','touchmove'].forEach(ev=>el.addEventListener(ev,()=>clearTimeout(timer)));el.addEventListener('contextmenu',e=>{e.preventDefault();let list=root.id==='recent'?entries:entries.filter(x=>filter==='all'||x.type===filter);let x=list[i];if(x&&confirm('Excluir '+x.description+'?')){entries=entries.filter(y=>y.id!==x.id);save()}})})}
+function render(){let now=new Date(),m=now.toISOString().slice(0,7),month=entries.filter(x=>x.date.startsWith(m)),inc=month.filter(x=>x.type==='income').reduce((a,x)=>a+x.value,0),out=month.filter(x=>x.type==='expense').reduce((a,x)=>a+x.value,0),allInc=entries.filter(x=>x.type==='income').reduce((a,x)=>a+x.value,0),allOut=entries.filter(x=>x.type==='expense').reduce((a,x)=>a+x.value,0);
+$('balance').textContent=money(allInc-allOut);$('income').textContent=money(inc);$('expense').textContent=money(out);$('result').textContent=money(inc-out);$('count').textContent=entries.length+' lançamentos';
+$('recent').innerHTML=entries.length?entries.slice(0,5).map(itemHTML).join(''):'<div class="empty">Seus lançamentos aparecerão aqui.<br>Comece adicionando uma receita ou despesa.</div>';
+let filtered=entries.filter(x=>filter==='all'||x.type===filter);$('allList').innerHTML=filtered.length?filtered.map(itemHTML).join(''):'<div class="empty">Nenhum lançamento por aqui.</div>';
+let totals={};month.filter(x=>x.type==='expense').forEach(x=>totals[x.category]=(totals[x.category]||0)+x.value);let pairs=Object.entries(totals).sort((a,b)=>b[1]-a[1]);$('categories').innerHTML=pairs.length?pairs.map(([c,v])=>`<div class="item"><div class="itemmain"><b>${esc(c)}</b><small>${inc+out?Math.round(v/(out||1)*100):0}% das despesas</small></div><b>${money(v)}</b></div>`).join(''):'<div class="empty">Ainda não há despesas neste mês.</div>';bindDelete($('recent'));bindDelete($('allList'))}
+document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));render()});
+$('exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({app:'LINCE',version:1,entries},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='lince-backup.json';a.click();URL.revokeObjectURL(a.href)};
+$('importFile').onchange=async e=>{try{let obj=JSON.parse(await e.target.files[0].text());if(!Array.isArray(obj.entries))throw Error();if(confirm('Importar '+obj.entries.length+' lançamentos? Isso substituirá os dados atuais.')){entries=obj.entries;save();toast('Backup importado')}}catch{toast('Arquivo de backup inválido')}e.target.value=''};
+let deferred;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;$('installBtn').hidden=false});$('installBtn').onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null}else toast('Use o menu do navegador e escolha “Adicionar à tela inicial”.')};
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+render();fillCats();
+</script>
+</body></html>
